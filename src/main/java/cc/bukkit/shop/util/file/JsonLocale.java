@@ -10,8 +10,9 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.maxgamer.quickshop.QuickShop;
+
 import cc.bukkit.shop.LocaleFile;
+import cc.bukkit.shop.Shop;
 import lombok.ToString;
 
 @ToString
@@ -77,7 +78,7 @@ public class JsonLocale implements LocaleFile {
   @NotNull
   @Override
   public InputStream getInputStream() {
-    return QuickShop.instance().getResource(resourcePath);
+    return Shop.instance().getResource(resourcePath);
   }
 
   @Override

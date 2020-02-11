@@ -1,4 +1,4 @@
-package cc.bukkit.shop.configuration;
+package cc.bukkit.shop.configuration.annotation;
 
 public enum NodeType {
   /*

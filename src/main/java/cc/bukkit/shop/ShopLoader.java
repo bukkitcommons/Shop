@@ -7,7 +7,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import org.bukkit.Chunk;
 import org.jetbrains.annotations.NotNull;
-import cc.bukkit.shop.data.ShopData;
+import cc.bukkit.shop.action.data.ShopData;
 
 public interface ShopLoader {
   void loadShops();

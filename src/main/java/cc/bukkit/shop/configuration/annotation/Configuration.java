@@ -1,4 +1,4 @@
-package cc.bukkit.shop.configuration;
+package cc.bukkit.shop.configuration.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -7,14 +7,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Documented
-@Target(ElementType.FIELD)
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Node {
+public @interface Configuration {
   String value();
-
-  boolean rewrite() default false;
-  
-  String ref() default "";
-  
-  NodeType type() default NodeType.CONFIG;
 }

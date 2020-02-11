@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.List;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public interface CommandProcesser {
   /**
@@ -35,7 +34,7 @@ public interface CommandProcesser {
    * @param commandLabel The command prefix /qs is qs
    * @return The result for tab-complete lists
    */
-  @Nullable
+  @NotNull
   default List<String> onTabComplete(@NotNull CommandSender sender, @NotNull String commandLabel,
       @NotNull String[] cmdArg) {
     return Collections.emptyList();

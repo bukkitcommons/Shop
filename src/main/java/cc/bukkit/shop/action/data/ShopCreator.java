@@ -1,9 +1,12 @@
-package cc.bukkit.shop.data;
+package cc.bukkit.shop.action.data;
 
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import cc.bukkit.shop.action.ShopAction;
+import cc.bukkit.shop.action.ShopActionData;
+import cc.bukkit.shop.util.ShopLocation;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;

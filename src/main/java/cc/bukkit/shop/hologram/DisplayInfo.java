@@ -1,9 +1,10 @@
-package cc.bukkit.shop;
+package cc.bukkit.shop.hologram;
 
 import java.io.Serializable;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import cc.bukkit.shop.ContainerShop;
 import lombok.Data;
 
 @Data

@@ -1,12 +1,11 @@
-package cc.bukkit.shop;
+package cc.bukkit.shop.action;
 
 import java.util.UUID;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import cc.bukkit.shop.ContainerShop;
-import cc.bukkit.shop.data.ShopActionData;
-import cc.bukkit.shop.data.ShopCreator;
-import cc.bukkit.shop.data.ShopSnapshot;
+import cc.bukkit.shop.action.data.ShopCreator;
+import cc.bukkit.shop.action.data.ShopSnapshot;
 
 public interface ShopActionManager {
   boolean hasAction(@NotNull UUID player);

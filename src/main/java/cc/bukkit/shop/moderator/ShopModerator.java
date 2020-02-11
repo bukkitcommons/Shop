@@ -1,4 +1,4 @@
-package cc.bukkit.shop;
+package cc.bukkit.shop.moderator;
 
 import java.util.Set;
 import java.util.UUID;

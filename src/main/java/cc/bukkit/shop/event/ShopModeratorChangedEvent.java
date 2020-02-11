@@ -18,7 +18,7 @@ package cc.bukkit.shop.event;
 
 import org.jetbrains.annotations.NotNull;
 import cc.bukkit.shop.ContainerShop;
-import cc.bukkit.shop.ShopModerator;
+import cc.bukkit.shop.moderator.ShopModerator;
 import lombok.Getter;
 
 /** Calling when moderator was changed, Can't cancel */

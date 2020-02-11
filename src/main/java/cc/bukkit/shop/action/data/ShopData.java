@@ -1,12 +1,13 @@
-package cc.bukkit.shop.data;
+package cc.bukkit.shop.action.data;
 
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import cc.bukkit.shop.ShopModerator;
 import cc.bukkit.shop.ShopType;
+import cc.bukkit.shop.moderator.ShopModerator;
+import cc.bukkit.shop.util.ShopLocation;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;

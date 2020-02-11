@@ -1,4 +1,4 @@
-package cc.bukkit.shop.data;
+package cc.bukkit.shop.util;
 
 import java.io.Serializable;
 import org.bukkit.Bukkit;
@@ -8,7 +8,6 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import cc.bukkit.shop.util.Utils;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 

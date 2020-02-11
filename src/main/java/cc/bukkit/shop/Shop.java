@@ -1,5 +1,7 @@
 package cc.bukkit.shop;
 
+import cc.bukkit.shop.action.ShopActionManager;
+
 public abstract class Shop {
   private static ShopPlugin plugin;
   
@@ -35,5 +37,13 @@ public abstract class Shop {
   
   public static ShopItemMatcher getItemMatcher() {
     return plugin.getItemMatcher();
+  }
+  
+  public static ShopMessager getMessager() {
+    return plugin.getMessager();
+  }
+  
+  public static LocaleManager getLocaleManager() {
+    return plugin.getLocaleManager();
   }
 }

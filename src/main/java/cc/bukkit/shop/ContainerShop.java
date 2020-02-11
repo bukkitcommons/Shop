@@ -7,15 +7,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import cc.bukkit.shop.data.ShopLocation;
 import cc.bukkit.shop.hologram.DisplayItem;
+import cc.bukkit.shop.moderator.Managed;
+import cc.bukkit.shop.moderator.ShopModerator;
+import cc.bukkit.shop.util.ShopLocation;
 
 public interface ContainerShop extends Managed {
   /**
    * Delete the shop from database.
    * @see QuickShopManager#delete(ContainerShop)
    */
-  @Deprecated
   default public void delete() {
     Shop.getLoader().delete(this);
   }

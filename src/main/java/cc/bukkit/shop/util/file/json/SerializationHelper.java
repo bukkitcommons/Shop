@@ -1,4 +1,4 @@
-package cc.bukkit.shop.util.file;
+package cc.bukkit.shop.util.file.json;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bukkit.configuration.ConfigurationSection;
@@ -26,9 +25,6 @@ public class SerializationHelper {
   public static Object serialize(@NotNull Object value) {
     if (value instanceof Object[]) {
       value = new ArrayList<>(Arrays.asList((Object[]) value));
-    }
-    if (value instanceof Set && !(value instanceof SerializableSet)) {
-      value = new SerializableSet((Set) value);
     }
     if (value instanceof ConfigurationSection) {
       return buildMap(((ConfigurationSection) value).getValues(false));

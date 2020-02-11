@@ -1,4 +1,4 @@
-package cc.bukkit.shop.util.file;
+package cc.bukkit.shop.util.file.json;
 
 import java.io.File;
 import java.io.InputStream;
@@ -8,11 +8,14 @@ import java.util.List;
 import java.util.Optional;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import cc.bukkit.shop.LocaleFile;
 import cc.bukkit.shop.Shop;
+import cc.bukkit.shop.ShopPlugin;
+import cc.bukkit.shop.util.file.Rewriter;
 import lombok.ToString;
 
 @ToString
@@ -23,6 +26,8 @@ public class JsonLocale implements LocaleFile {
   private final Rewriter rewriter;
   @NotNull
   private final String resourcePath;
+  @NotNull
+  private final ShopPlugin plugin;
   
   @NotNull
   protected FileConfiguration fileConfiguration = new FileConfiguration() {
@@ -42,10 +47,11 @@ public class JsonLocale implements LocaleFile {
     }
   };
 
-  public JsonLocale(@NotNull File file, @NotNull String resourcePath) {
+  public JsonLocale(@NotNull File file, @NotNull String resourcePath, @NotNull ShopPlugin plugin) {
     this.file = file;
     this.rewriter = new Rewriter(file);
     this.resourcePath = resourcePath;
+    this.plugin = plugin;
   }
 
   @Override
@@ -78,7 +84,7 @@ public class JsonLocale implements LocaleFile {
   @NotNull
   @Override
   public InputStream getInputStream() {
-    return Shop.instance().getResource(resourcePath);
+    return plugin.getResource(resourcePath);
   }
 
   @Override

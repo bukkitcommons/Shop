@@ -15,12 +15,8 @@ public abstract class Shop {
    * @return success if it haven't been set.
    */
   public synchronized static boolean setPlugin(ShopPlugin plugin) {
-    if (plugin == null) {
-      Shop.plugin = plugin;
-      return true;
-    } else {
-      return false;
-    }
+    Shop.plugin = plugin;
+    return true;
   }
   
   public static ShopManager getManager() {

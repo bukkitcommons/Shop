@@ -1,4 +1,4 @@
-package cc.bukkit.shop.util.file;
+package cc.bukkit.shop.util.file.json;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -30,7 +30,6 @@ import com.google.gson.internal.LinkedTreeMap;
 import com.google.gson.reflect.TypeToken;
 
 public final class JSONConfiguration extends FileConfiguration {
-
   protected static final String BLANK_CONFIG = "{}\n";
 
   @NotNull

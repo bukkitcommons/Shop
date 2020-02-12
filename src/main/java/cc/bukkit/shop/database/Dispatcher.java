@@ -10,7 +10,7 @@ import cc.bukkit.shop.util.ShopLogger;
 
 /** Queued database manager. Use queue to solve run SQL make server lagg issue. */
 public class Dispatcher implements Runnable {
-  private final BlockingQueue<PreparedStatement> sqlQueue = Queues.newLinkedBlockingQueue();
+  private final BlockingQueue<String> sqlQueue = Queues.newLinkedBlockingQueue();
 
   @NotNull
   private final Database database;
@@ -39,11 +39,11 @@ public class Dispatcher implements Runnable {
    *
    * @param ps The ps you want add in queue.
    */
-  public void add(@NotNull PreparedStatement ps) {
+  public void add(@NotNull String sql) {
     if (running)
-      sqlQueue.offer(ps);
+      sqlQueue.offer(sql);
     else
-      execute(ps);
+      execute(sql);
   }
 
   @Override
@@ -56,17 +56,25 @@ public class Dispatcher implements Runnable {
     }
   }
   
-  private void execute(PreparedStatement statement) {
+  private void execute(@NotNull String sql) {
+    PreparedStatement statement;
+    try {
+      statement = database.getConnection().prepareStatement(sql);
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return;
+    }
+    
     try {
       statement.execute();
-    } catch (SQLException sql) {
-      sql.printStackTrace();
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
 
     try {
       statement.close();
-    } catch (SQLException sql) {
-      sql.printStackTrace();
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
   }
   

@@ -7,7 +7,6 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.maxgamer.quickshop.utils.Util;
 import com.google.gson.JsonSyntaxException;
 import cc.bukkit.shop.ShopType;
 import cc.bukkit.shop.moderator.ShopModerator;
@@ -50,13 +49,13 @@ public class ShopData implements Serializable {
   private static ShopModerator deserializeModerator(@NotNull String moderatorJson) {
     ShopModerator shopModerator;
     if (Utils.isUUID(moderatorJson)) {
-      shopModerator = new ShopModerator(UUID.fromString(moderatorJson)); // New one
+      shopModerator = new ShopModerator(UUID.fromString(moderatorJson));
     } else {
       try {
         shopModerator = ShopModerator.deserialize(moderatorJson);
       } catch (JsonSyntaxException ex) {
         moderatorJson = Bukkit.getOfflinePlayer(moderatorJson).getUniqueId().toString();
-        shopModerator = new ShopModerator(UUID.fromString(moderatorJson)); // New one
+        shopModerator = new ShopModerator(UUID.fromString(moderatorJson));
       }
     }
     return shopModerator;

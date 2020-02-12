@@ -18,13 +18,13 @@ import lombok.experimental.Accessors;
 public class ShopData implements Serializable {
   private static final long serialVersionUID = 1L;
   
-  @NotNull
+  @Nullable
   private final String item;
-  @NotNull
+  @Nullable
   private final String moderators;
-  @NotNull
+  @Nullable
   private final String world;
-  @NotNull
+  @Nullable
   private final ShopType type;
   private final double price;
   private final boolean unlimited;
@@ -39,6 +39,11 @@ public class ShopData implements Serializable {
   public ShopModerator moderators() {
     return manager == null ?
         ShopModerator.deserialize(moderators) : manager;
+  }
+  
+  @Nullable
+  public String serializedModerators() {
+    return moderators;
   }
   
   @Nullable

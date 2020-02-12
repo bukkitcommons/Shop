@@ -1,4 +1,4 @@
-package cc.bukkit.shop.util.file;
+package cc.bukkit.shop.configuration;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -71,7 +71,7 @@ public class YamlComments {
           if (character == '#')
             if (hasSection) {
               // Part comments
-              String section = StringUtils.substringBefore(line, "#");
+              String section = StringUtils.substringBefore(line, " # ");
               insertsAfter.put(section, " # ".concat(StringUtils.substringAfter(line, " # ")));
             } else {
               break; // Pure comment line continues

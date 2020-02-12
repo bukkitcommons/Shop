@@ -18,6 +18,7 @@ import cc.bukkit.shop.configuration.annotation.Configuration;
 import cc.bukkit.shop.configuration.annotation.Node;
 import cc.bukkit.shop.configuration.annotation.NodeType;
 import cc.bukkit.shop.util.ShopLogger;
+import cc.bukkit.shop.util.file.YamlComments;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -95,7 +96,7 @@ public class ConfigurationManager {
           data.conf().set(path, getStatic(field));
       });
 
-      data.conf().save(data.file());
+      YamlComments.save(data.file(), data.conf());
     }
     return data;
   }
@@ -152,7 +153,7 @@ public class ConfigurationManager {
         }
       });
 
-      conf.save(file);
+      YamlComments.save(file, conf);
       return data;
     }
     return null;

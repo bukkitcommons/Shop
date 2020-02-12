@@ -42,4 +42,8 @@ public abstract class Shop {
   public static LocaleManager getLocaleManager() {
     return plugin.getLocaleManager();
   }
+  
+  public static String getVersion() {
+    return plugin.getVersion();
+  }
 }

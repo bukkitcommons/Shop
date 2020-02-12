@@ -1,15 +1,15 @@
 package cc.bukkit.shop.integration;
 
-import java.util.HashSet;
 import java.util.Set;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import com.google.common.collect.Sets;
 import lombok.Getter;
 
 @Getter
-public class IntegrationHelper {
-  private Set<IntegratedPlugin> integrations = new HashSet<>();
+public class IntegrationManager {
+  private Set<IntegratedPlugin> integrations = Sets.newHashSet();
 
   public void register(@NotNull IntegratedPlugin clazz) {
     if (!isIntegrationClass(clazz)) {

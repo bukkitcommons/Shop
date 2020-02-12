@@ -15,4 +15,6 @@ public interface ShopPlugin extends Plugin {
   LocaleManager getLocaleManager();
   
   ShopMessager getMessager();
+
+  String getVersion();
 }

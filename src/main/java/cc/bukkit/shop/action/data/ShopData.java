@@ -3,11 +3,16 @@ package cc.bukkit.shop.action.data;
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
+import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.maxgamer.quickshop.utils.Util;
+import com.google.gson.JsonSyntaxException;
 import cc.bukkit.shop.ShopType;
 import cc.bukkit.shop.moderator.ShopModerator;
 import cc.bukkit.shop.util.ShopLocation;
+import cc.bukkit.shop.util.Utils;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
@@ -38,7 +43,23 @@ public class ShopData implements Serializable {
   @NotNull
   public ShopModerator moderators() {
     return manager == null ?
-        ShopModerator.deserialize(moderators) : manager;
+        deserializeModerator(moderators) : manager;
+  }
+  
+  @NotNull
+  private static ShopModerator deserializeModerator(@NotNull String moderatorJson) {
+    ShopModerator shopModerator;
+    if (Utils.isUUID(moderatorJson)) {
+      shopModerator = new ShopModerator(UUID.fromString(moderatorJson)); // New one
+    } else {
+      try {
+        shopModerator = ShopModerator.deserialize(moderatorJson);
+      } catch (JsonSyntaxException ex) {
+        moderatorJson = Bukkit.getOfflinePlayer(moderatorJson).getUniqueId().toString();
+        shopModerator = new ShopModerator(UUID.fromString(moderatorJson)); // New one
+      }
+    }
+    return shopModerator;
   }
   
   @Nullable

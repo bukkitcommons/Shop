@@ -1,6 +1,8 @@
 package cc.bukkit.shop.util;
 
+import java.util.UUID;
 import org.bukkit.Location;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class Utils {
   /**
@@ -13,6 +15,18 @@ public abstract class Utils {
    */
   public static long chunkKey(int chunkX, int chunkZ) {
     return (long) chunkX & 0xffffffffL | ((long) chunkZ & 0xffffffffL) << 32;
+  }
+  
+  public static boolean isUUID(@NotNull String string) {
+    if (string.length() != 36 && string.length() != 32) {
+      return false;
+    }
+    try {
+      UUID.fromString(string);
+      return true;
+    } catch (IllegalArgumentException e) {
+      return false;
+    }
   }
 
   /**

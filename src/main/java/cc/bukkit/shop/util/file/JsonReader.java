@@ -1,21 +1,25 @@
-package cc.bukkit.shop.util.file.json;
+package cc.bukkit.shop.util.file;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
-import org.apache.commons.lang.StringEscapeUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.FileConfigurationOptions;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.jetbrains.annotations.NotNull;
+import org.yaml.snakeyaml.error.YAMLException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -29,12 +33,77 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.internal.LinkedTreeMap;
 import com.google.gson.reflect.TypeToken;
 
-public final class JSONConfiguration extends FileConfiguration {
+public class JsonReader extends FileConfiguration {
   protected static final String BLANK_CONFIG = "{}\n";
+  
+  private JsonReader() {
+    ;
+  }
+  
+  private static class JSONConfigurationOptions extends FileConfigurationOptions {
+    protected JSONConfigurationOptions(@NotNull MemoryConfiguration configuration) {
+      super(configuration);
+    }
+  }
+  
+  /**
+   * Parses through the input map to deal with serialized objects a la
+   * {@link ConfigurationSerializable}.
+   *
+   * <p>
+   * Called recursively first on Maps and Lists before passing the parsed input over to
+   * {@link ConfigurationSerialization#deserializeObject(java.util.Map)}. Basically this means it
+   * will deserialize the most nested objects FIRST and the top level object LAST.
+   *
+   * @param input the input
+   * @return the object that deserialize
+   */
+  private static Object deserialize(@NotNull final Map<?, ?> input) {
+    final Map<String, Object> output = new LinkedHashMap<String, Object>(input.size());
+    for (final Map.Entry<?, ?> e : input.entrySet()) {
+      if (e.getValue() instanceof Map) {
+        output.put(e.getKey().toString(), deserialize((Map<?, ?>) e.getValue()));
+      } else if (e.getValue() instanceof List) {
+        output.put(e.getKey().toString(), deserialize((List<?>) e.getValue()));
+      } else {
+        output.put(e.getKey().toString(), e.getValue());
+      }
+    }
+    if (output.containsKey(ConfigurationSerialization.SERIALIZED_TYPE_KEY)) {
+      try {
+        return ConfigurationSerialization.deserializeObject(output);
+      } catch (IllegalArgumentException ex) {
+        throw new YAMLException("Could not deserialize object", ex);
+      }
+    }
+    return output;
+  }
+
+  /**
+   * Parses through the input list to deal with serialized objects a la
+   * {@link ConfigurationSerializable}.
+   *
+   * <p>
+   * Functions similarly to {@link #deserialize(java.util.Map)} but only for detecting lists within
+   * lists and maps within lists.
+   */
+  private static Object deserialize(@NotNull final List<?> input) {
+    final List<Object> output = new ArrayList<Object>(input.size());
+    for (final Object o : input) {
+      if (o instanceof Map) {
+        output.add(deserialize((Map<?, ?>) o));
+      } else if (o instanceof List) {
+        output.add(deserialize((List<?>) o));
+      } else {
+        output.add(o);
+      }
+    }
+    return output;
+  }
 
   @NotNull
-  public static JSONConfiguration loadConfiguration(@NotNull File file) {
-    final JSONConfiguration config = new JSONConfiguration();
+  public static FileConfiguration read(@NotNull File file) {
+    final JsonReader config = new JsonReader();
 
     try {
       config.load(file);
@@ -46,39 +115,7 @@ public final class JSONConfiguration extends FileConfiguration {
 
     return config;
   }
-
-  @NotNull
-  public static JSONConfiguration loadConfiguration(@NotNull Reader reader) {
-    final JSONConfiguration config = new JSONConfiguration();
-
-    try {
-      config.load(reader);
-    } catch (IOException | InvalidConfigurationException ex) {
-      Bukkit.getLogger().log(Level.SEVERE, "Cannot load configuration from stream", ex);
-    }
-
-    return config;
-  }
-
-  @NotNull
-  @Override
-  public String saveToString() {
-    final GsonBuilder gsonBuilder = new GsonBuilder().disableHtmlEscaping();
-
-    // if (!options().prettyPrint()) {
-    gsonBuilder.setPrettyPrinting();
-    // }
-    final Gson gson = gsonBuilder.create();
-    final Object value = SerializationHelper.serialize(getValues(false));
-    final String dump = StringEscapeUtils.unescapeJava(gson.toJson(value));
-
-    if (dump.equals(BLANK_CONFIG)) {
-      return "";
-    }
-
-    return dump;
-  }
-
+  
   @Override
   public void loadFromString(@NotNull String contents) throws InvalidConfigurationException {
     if (contents.isEmpty()) {
@@ -114,7 +151,7 @@ public final class JSONConfiguration extends FileConfiguration {
 
   protected void convertMapsToSections(@NotNull Map<?, ?> input,
       @NotNull ConfigurationSection section) {
-    final Object result = SerializationHelper.deserialize(input);
+    final Object result = deserialize(input);
 
     if (result instanceof Map) {
       input = (Map<?, ?>) result;
@@ -136,7 +173,7 @@ public final class JSONConfiguration extends FileConfiguration {
 
   @NotNull
   @Override
-  public JSONConfigurationOptions options() {
+  public FileConfigurationOptions options() {
     if (options == null) {
       options = new JSONConfigurationOptions(this);
     }
@@ -144,7 +181,7 @@ public final class JSONConfiguration extends FileConfiguration {
     return (JSONConfigurationOptions) options;
   }
 
-  public static class MapDeserializerDoubleAsIntFix
+  private static class MapDeserializerDoubleAsIntFix
       implements JsonDeserializer<Map<String, Object>> {
 
     @Override
@@ -191,5 +228,10 @@ public final class JSONConfiguration extends FileConfiguration {
       }
       return null;
     }
+  }
+
+  @Override
+  public String saveToString() {
+    return "";
   }
 }

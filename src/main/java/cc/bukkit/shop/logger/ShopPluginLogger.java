@@ -1,4 +1,4 @@
-package cc.bukkit.shop.util;
+package cc.bukkit.shop.logger;
 
 import static org.bukkit.ChatColor.AQUA;
 import static org.bukkit.ChatColor.BLACK;

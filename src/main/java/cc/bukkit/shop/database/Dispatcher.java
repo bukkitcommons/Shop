@@ -6,7 +6,7 @@ import java.util.concurrent.BlockingQueue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import com.google.common.collect.Queues;
-import cc.bukkit.shop.util.ShopLogger;
+import cc.bukkit.shop.logger.ShopLogger;
 
 /** Queued database manager. Use queue to solve run SQL make server lagg issue. */
 public class Dispatcher implements Runnable {

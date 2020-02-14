@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import com.google.common.collect.Maps;
 import cc.bukkit.shop.hologram.DisplayAttribute;
 import cc.bukkit.shop.hologram.DisplayType;
-import cc.bukkit.shop.util.ShopLogger;
+import cc.bukkit.shop.logger.ShopLogger;
 import lombok.Data;
 import lombok.Getter;
 import lombok.experimental.Accessors;

@@ -17,7 +17,7 @@ import cc.bukkit.shop.Shop;
 import cc.bukkit.shop.configuration.annotation.Configuration;
 import cc.bukkit.shop.configuration.annotation.Node;
 import cc.bukkit.shop.configuration.annotation.NodeType;
-import cc.bukkit.shop.util.ShopLogger;
+import cc.bukkit.shop.logger.ShopLogger;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;

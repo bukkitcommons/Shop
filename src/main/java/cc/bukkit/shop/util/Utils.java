@@ -1,8 +1,14 @@
 package cc.bukkit.shop.util;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public abstract class Utils {
   /**
@@ -27,6 +33,41 @@ public abstract class Utils {
     } catch (IllegalArgumentException e) {
       return false;
     }
+  }
+  
+  /**
+   * Read the file to the String
+   *
+   * @param cacheFile Target file.
+   * @return Target file's content.
+   */
+  public static String readToString(@NotNull File file) {
+    long filelength = file.length();
+    byte[] filecontent = new byte[(int) filelength];
+    try {
+      FileInputStream in = new FileInputStream(file);
+      in.read(filecontent);
+      in.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return new String(filecontent, StandardCharsets.UTF_8);
+  }
+  
+  public static String fillArgs(@Nullable String raw, @Nullable String... args) {
+    if (raw == null) {
+      return "Invalid message: null";
+    }
+    if (raw.isEmpty()) {
+      return "";
+    }
+    if (args == null) {
+      return raw;
+    }
+    for (int i = 0; i < args.length; i++) {
+      raw = StringUtils.replace(raw, "{" + i + "}", args[i] == null ? "" : args[i]);
+    }
+    return raw;
   }
 
   /**

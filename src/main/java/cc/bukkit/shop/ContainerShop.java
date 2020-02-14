@@ -10,7 +10,6 @@ import org.jetbrains.annotations.Nullable;
 import cc.bukkit.shop.hologram.DisplayItem;
 import cc.bukkit.shop.moderator.Managed;
 import cc.bukkit.shop.moderator.ShopModerator;
-import cc.bukkit.shop.util.ShopLocation;
 
 public interface ContainerShop extends Managed {
   /**

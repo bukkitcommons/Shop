@@ -4,11 +4,11 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import cc.bukkit.shop.ContainerShop;
 import cc.bukkit.shop.Shop;
+import cc.bukkit.shop.ShopLocation;
 import cc.bukkit.shop.ShopType;
 import cc.bukkit.shop.action.ShopAction;
 import cc.bukkit.shop.action.ShopActionData;
 import cc.bukkit.shop.moderator.ShopModerator;
-import cc.bukkit.shop.util.ShopLocation;
 import lombok.Data;
 import lombok.experimental.Accessors;
 

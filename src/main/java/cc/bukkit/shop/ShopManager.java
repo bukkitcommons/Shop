@@ -13,7 +13,6 @@ import org.jetbrains.annotations.Nullable;
 import com.google.gson.JsonSyntaxException;
 import cc.bukkit.shop.action.data.ShopCreator;
 import cc.bukkit.shop.action.data.ShopData;
-import cc.bukkit.shop.util.ShopLocation;
 import cc.bukkit.shop.viewer.ShopViewer;
 
 /**

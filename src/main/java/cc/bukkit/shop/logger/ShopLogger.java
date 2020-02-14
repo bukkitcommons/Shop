@@ -1,4 +1,4 @@
-package cc.bukkit.shop.util;
+package cc.bukkit.shop.logger;
 
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;

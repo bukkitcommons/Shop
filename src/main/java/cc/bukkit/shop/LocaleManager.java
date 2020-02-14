@@ -1,6 +1,5 @@
 package cc.bukkit.shop;
 
-import java.util.Optional;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.enchantments.Enchantment;
@@ -19,7 +18,7 @@ public interface LocaleManager extends MinecraftLocaleProvider {
   /*
    * Common getters
    */
-  Optional<String> get(@NotNull String key);
+  String get(@NotNull String key);
   
   /**
    * Translate boolean value to String, the symbon is changeable by language file.
@@ -32,7 +31,8 @@ public interface LocaleManager extends MinecraftLocaleProvider {
   }
   
   default String get(@NotNull String key, @NotNull String defaultValue) {
-    return get(key).orElse(defaultValue);
+    String value = get(key);
+    return value == null ? defaultValue : value;
   }
 
   String get(@NotNull String loc, @Nullable Object player, @NotNull String... args);

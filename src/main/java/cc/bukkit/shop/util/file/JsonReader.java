@@ -1,8 +1,9 @@
 package cc.bukkit.shop.util.file;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -102,17 +103,17 @@ public class JsonReader extends FileConfiguration {
     }
     return output;
   }
-
+  
   @NotNull
-  public static FileConfiguration read(@NotNull InputStream inputStream) {
-    final JsonReader config = new JsonReader();
+  public static FileConfiguration read(@NotNull File file) {
+    JsonReader config = new JsonReader();
 
     try {
-      config.load(new InputStreamReader(inputStream, Charsets.UTF_8));
+      config.load(new InputStreamReader(new FileInputStream(file), Charsets.UTF_8));
     } catch (FileNotFoundException ignored) {
-      // ignored...
+      return config;
     } catch (IOException | InvalidConfigurationException ex) {
-      Bukkit.getLogger().log(Level.SEVERE, "Cannot load " + inputStream, ex);
+      Bukkit.getLogger().log(Level.SEVERE, "Cannot load " + file, ex);
     }
 
     return config;
@@ -182,7 +183,7 @@ public class JsonReader extends FileConfiguration {
 
     return (JSONConfigurationOptions) options;
   }
-
+  
   private static class MapDeserializerDoubleAsIntFix
       implements JsonDeserializer<Map<String, Object>> {
 
@@ -194,7 +195,6 @@ public class JsonReader extends FileConfiguration {
     }
 
     public Object read(JsonElement in) {
-
       if (in.isJsonArray()) {
         List<Object> list = new ArrayList<Object>();
         JsonArray arr = in.getAsJsonArray();

@@ -46,13 +46,4 @@ public interface MinecraftLocaleProvider {
    */
   @NotNull
   String get(@NotNull Enchantment enchantment);
-
-  /**
-   * Get custom translations.
-   *
-   * @param key The target node path
-   * @return The translations for you custom node path
-   */
-  @NotNull
-  Optional<String> get(@NotNull String key);
 }

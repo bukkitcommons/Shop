@@ -18,7 +18,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 import com.google.common.collect.Maps;
-import com.google.common.io.Files;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -38,27 +37,25 @@ public class MinecraftLocale implements MinecraftLocaleProvider {
   private final File container;
   
   public void load(@NotNull String locale) throws IOException {
+    container.mkdirs();
     File cacheFile = new File(container, "lang.cache");
-    Files.createParentDirs(cacheFile);
     boolean refetch = cacheFile.createNewFile();
 
     /*
      * Lookup cache
      */
-    YamlConfiguration cache = YamlConfiguration.loadConfiguration(container);
+    YamlConfiguration cache = YamlConfiguration.loadConfiguration(cacheFile);
     String cachedVersion = cache.getString("ver", "");
     String cachedLocale = cache.getString("lang", "");
     String cachedHash = cache.getString("hash", "");
     
     String serverVersion = Reflections.getServerVersion();
+    locale = locale.toLowerCase(Locale.ROOT);
     
     refetch = refetch ||
-        !serverVersion.equals(cachedVersion) ||
-        locale.equals(cachedLocale) ||
+        !serverVersion.equalsIgnoreCase(cachedVersion) ||
+        locale.equalsIgnoreCase(cachedLocale) ||
         cachedHash.isEmpty();
-    
-    String[] info = StringUtils.split(locale, '_');
-    locale = info[0].toLowerCase(Locale.ROOT).concat("_").concat(info[1].toLowerCase(Locale.ROOT));
     
     /*
      * Fetch lang file
@@ -69,23 +66,22 @@ public class MinecraftLocale implements MinecraftLocaleProvider {
 
       if (assetJson != null) {
         AssetJson versionJson = new AssetJson(assetJson);
-        String jsonLangHash = versionJson.getLanguageHash(locale);
+        cachedHash = versionJson.getLanguageHash(locale);
 
-        if (jsonLangHash != null) {
-          String langJson = mojangAPI.downloadTextFileFromMojang(container, jsonLangHash);
+        if (cachedHash != null) {
+          String langJson = mojangAPI.downloadTextFileFromMojang(container, cachedHash);
 
           if (langJson != null) {
-            ResourceAccessor.save(new ByteArrayInputStream(langJson.getBytes(StandardCharsets.UTF_8)), new File(container, jsonLangHash));
-
+            ResourceAccessor.save(new ByteArrayInputStream(
+                langJson.getBytes(StandardCharsets.UTF_8)), new File(container, cachedHash));
+            
             cache.set("ver", serverVersion);
-            cache.set("hash", jsonLangHash);
+            cache.set("hash", cachedHash);
             cache.set("lang", locale);
-            cache.save(container);
+            cache.save(cacheFile);
           } else {
-            ShopLogger.instance().warning("Cannot download texts for " + jsonLangHash);
+            ShopLogger.instance().warning("Cannot download texts for " + cachedHash);
           }
-          
-          cachedHash = jsonLangHash;
         } else {
           ShopLogger.instance().warning("Cannot find hash for " + locale);
         }
@@ -94,7 +90,7 @@ public class MinecraftLocale implements MinecraftLocaleProvider {
       }
       
       ShopLogger.instance().warning(
-          "Cannot download required files, names of items may will display in the default locale: " + locale);
+          "Cannot download required files, names of items may will display in " + locale);
     }
     
     /*

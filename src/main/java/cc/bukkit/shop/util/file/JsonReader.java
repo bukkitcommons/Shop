@@ -1,8 +1,9 @@
 package cc.bukkit.shop.util.file;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -20,6 +21,7 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.jetbrains.annotations.NotNull;
 import org.yaml.snakeyaml.error.YAMLException;
+import com.google.common.base.Charsets;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -102,15 +104,15 @@ public class JsonReader extends FileConfiguration {
   }
 
   @NotNull
-  public static FileConfiguration read(@NotNull File file) {
+  public static FileConfiguration read(@NotNull InputStream inputStream) {
     final JsonReader config = new JsonReader();
 
     try {
-      config.load(file);
+      config.load(new InputStreamReader(inputStream, Charsets.UTF_8));
     } catch (FileNotFoundException ignored) {
       // ignored...
     } catch (IOException | InvalidConfigurationException ex) {
-      Bukkit.getLogger().log(Level.SEVERE, "Cannot load " + file, ex);
+      Bukkit.getLogger().log(Level.SEVERE, "Cannot load " + inputStream, ex);
     }
 
     return config;

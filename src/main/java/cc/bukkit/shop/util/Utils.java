@@ -9,6 +9,7 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import com.google.common.io.Files;
 
 public abstract class Utils {
   /**
@@ -45,6 +46,7 @@ public abstract class Utils {
     long filelength = file.length();
     byte[] filecontent = new byte[(int) filelength];
     try {
+      file.createNewFile();
       FileInputStream in = new FileInputStream(file);
       in.read(filecontent);
       in.close();

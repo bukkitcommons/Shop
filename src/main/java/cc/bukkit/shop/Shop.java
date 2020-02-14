@@ -15,7 +15,7 @@ public abstract class Shop {
    * @return success if it haven't been set.
    */
   public synchronized static boolean setPlugin(ShopPlugin plugin) {
-    if (plugin == null) {
+    if (Shop.plugin == null) {
       Shop.plugin = plugin;
       return true;
     } else {

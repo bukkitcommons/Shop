@@ -1,4 +1,4 @@
-package cc.bukkit.shop.util;
+package cc.bukkit.shop.util.version;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

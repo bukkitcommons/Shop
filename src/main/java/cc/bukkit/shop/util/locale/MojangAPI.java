@@ -14,7 +14,7 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-package cc.bukkit.shop.util;
+package cc.bukkit.shop.util.locale;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,6 +26,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import cc.bukkit.shop.logger.ShopLogger;
+import cc.bukkit.shop.util.HttpRequest;
+import cc.bukkit.shop.util.Utils;
 
 public class MojangAPI {
   final String versionManifestUrl = "https://launchermeta.mojang.com/mc/game/version_manifest.json";

@@ -14,7 +14,7 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-package cc.bukkit.shop.util;
+package cc.bukkit.shop.util.locale;
 
 import java.util.List;
 

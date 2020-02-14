@@ -15,8 +15,12 @@ public abstract class Shop {
    * @return success if it haven't been set.
    */
   public synchronized static boolean setPlugin(ShopPlugin plugin) {
-    Shop.plugin = plugin;
-    return true;
+    if (plugin == null) {
+      Shop.plugin = plugin;
+      return true;
+    } else {
+      return false;
+    }
   }
   
   public static ShopManager getManager() {
@@ -41,6 +45,10 @@ public abstract class Shop {
   
   public static LocaleManager getLocaleManager() {
     return plugin.getLocaleManager();
+  }
+  
+  public static PermissionManager getPermissions() {
+    return plugin.getPermissions();
   }
   
   public static String getVersion() {

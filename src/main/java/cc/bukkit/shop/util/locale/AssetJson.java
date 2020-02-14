@@ -1,4 +1,4 @@
-package cc.bukkit.shop.util;
+package cc.bukkit.shop.util.locale;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -6,6 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
+import cc.bukkit.shop.util.Utils;
 
 public class AssetJson {
   final String pathTemplate = "minecraft/lang/{0}.json";

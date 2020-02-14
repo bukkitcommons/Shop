@@ -1,4 +1,4 @@
-package cc.bukkit.shop.util;
+package cc.bukkit.shop.util.locale;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -25,6 +25,8 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import cc.bukkit.shop.MinecraftLocaleProvider;
 import cc.bukkit.shop.logger.ShopLogger;
+import cc.bukkit.shop.util.Reflections;
+import cc.bukkit.shop.util.Utils;
 import cc.bukkit.shop.util.file.ResourceAccessor;
 import lombok.RequiredArgsConstructor;
 

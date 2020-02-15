@@ -1,7 +1,6 @@
 package cc.bukkit.shop;
 
 import java.io.IOException;
-import java.util.Optional;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;

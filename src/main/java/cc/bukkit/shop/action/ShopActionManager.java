@@ -10,6 +10,8 @@ import cc.bukkit.shop.action.data.ShopSnapshot;
 public interface ShopActionManager {
   boolean hasAction(@NotNull UUID player);
   
+  ShopActionData getAction(@NotNull UUID player);
+  
   void setAction(@NotNull UUID player, @NotNull ShopActionData data);
   
   void removeAction(@NotNull UUID player);

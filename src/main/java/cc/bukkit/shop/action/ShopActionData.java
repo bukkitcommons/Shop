@@ -1,12 +1,12 @@
 package cc.bukkit.shop.action;
 
-import org.bukkit.inventory.ItemStack;
-import cc.bukkit.shop.ShopLocation;
+import cc.bukkit.shop.misc.ShopLocation;
+import cc.bukkit.shop.stack.Stacked;
 
 public interface ShopActionData {
   public ShopLocation location();
   
-  public ItemStack item();
+  public <S extends Stacked> S stack();
   
   public ShopAction action();
 }

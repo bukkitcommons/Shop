@@ -4,7 +4,7 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import cc.bukkit.shop.ContainerShop;
-import cc.bukkit.shop.hologram.DisplayData;
+import cc.bukkit.shop.hologram.DisplayScheme;
 import cc.bukkit.shop.hologram.DisplayType;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +15,7 @@ public class ShopDisplayItemSpawnEvent extends ShopEvent implements Cancellable 
   private final DisplayType displayType;
   
   @NotNull
-  private final DisplayData displayData;
+  private final DisplayScheme displayData;
 
   @NotNull
   private final ItemStack itemStack;
@@ -36,7 +36,7 @@ public class ShopDisplayItemSpawnEvent extends ShopEvent implements Cancellable 
   public ShopDisplayItemSpawnEvent(
       @NotNull ContainerShop shop,
       @NotNull ItemStack itemStack,
-      @NotNull DisplayData data) {
+      @NotNull DisplayScheme data) {
     
     this.displayData = data;
     this.shop = shop;

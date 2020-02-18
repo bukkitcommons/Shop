@@ -4,16 +4,18 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import org.jetbrains.annotations.Nullable;
-import cc.bukkit.shop.ContainerShop;
+import cc.bukkit.shop.ShopImage;
+import cc.bukkit.shop.stack.Stack;
+import cc.bukkit.shop.stack.Stacked;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
+@RequiredArgsConstructor(staticName = "of")
 public class ShopViewer {
   @Nullable
-  private final ContainerShop shop;
+  private final Stacked shop;
   
-  public static ShopViewer of(@Nullable ContainerShop shop) {
-    return new ShopViewer(shop);
+  public static ShopViewer of(@Nullable ShopImage shop) {
+    return new ShopViewer(Stack.of(shop));
   }
   
   public static ShopViewer empty() {
@@ -32,21 +34,21 @@ public class ShopViewer {
     return this;
   }
   
-  public ShopViewer accept(Consumer<ContainerShop> consumer) {
-    if (!fails) consumer.accept(shop);
+  public <T extends ShopImage> ShopViewer accept(Consumer<T> consumer) {
+    if (!fails) consumer.accept(shop.stack());
     return this;
   }
   
-  public boolean test(Predicate<ContainerShop> predicate, boolean def) {
-    return fails ? def : !predicate.test(shop);
+  public <T extends ShopImage> boolean test(Predicate<T> predicate, boolean def) {
+    return fails ? def : !predicate.test(shop.stack());
   }
   
-  public <R> R apply(Function<ContainerShop, R> function, R def) {
-    return fails ? def : function.apply(shop);
+  public <T extends ShopImage, R> R apply(Function<T, R> function, R def) {
+    return fails ? def : function.apply(shop.stack());
   }
   
-  public ShopViewer filter(Predicate<ContainerShop> predicate) {
-    fails = fails ? true : !predicate.test(shop);
+  public <T extends ShopImage> ShopViewer filter(Predicate<T> predicate) {
+    fails = fails ? true : !predicate.test(shop.stack());
     return this;
   }
   
@@ -54,9 +56,9 @@ public class ShopViewer {
     return shop == null;
   }
   
-  public ShopViewer ifPresent(Consumer<ContainerShop> consumer) {
+  public <T> ShopViewer ifPresent(Consumer<T> consumer) {
     if (!fails && shop != null)
-      consumer.accept(shop);
+      consumer.accept(shop.stack());
     return this;
   }
   
@@ -70,7 +72,7 @@ public class ShopViewer {
     return shop != null;
   }
 
-  public ContainerShop get() {
-    return shop;
+  public <T extends ShopImage> T get() {
+    return shop.stack();
   }
 }

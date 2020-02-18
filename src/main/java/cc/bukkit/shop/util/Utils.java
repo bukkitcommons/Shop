@@ -9,7 +9,6 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import com.google.common.io.Files;
 
 public abstract class Utils {
   /**
@@ -22,6 +21,41 @@ public abstract class Utils {
    */
   public static long chunkKey(int chunkX, int chunkZ) {
     return (long) chunkX & 0xffffffffL | ((long) chunkZ & 0xffffffffL) << 32;
+  }
+
+  /**
+   * Converts a name like IRON_INGOT into Iron Ingot to improve readability
+   *
+   * @param ugly The string such as IRON_INGOT
+   * @return A nicer version, such as Iron Ingot
+   */
+  public static String prettifyText(@NotNull String ugly) {
+    String[] nameParts = ugly.split("_");
+    if (nameParts.length == 1) {
+      return firstUppercase(ugly);
+    }
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < nameParts.length; i++) {
+      sb.append(firstUppercase(nameParts[i]));
+      if (i + 1 != nameParts.length) {
+        sb.append(" ");
+      }
+    }
+    return sb.toString();
+  }
+  
+  /**
+   * First uppercase for every words the first char for a text.
+   *
+   * @param string text
+   * @return Processed text.
+   */
+  public static String firstUppercase(@NotNull String string) {
+    if (string.length() > 1) {
+      return Character.toUpperCase(string.charAt(0)) + string.substring(1).toLowerCase();
+    } else {
+      return string.toUpperCase();
+    }
   }
   
   public static boolean isUUID(@NotNull String string) {

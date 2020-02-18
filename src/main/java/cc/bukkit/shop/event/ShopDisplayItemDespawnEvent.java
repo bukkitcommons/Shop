@@ -4,7 +4,7 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import cc.bukkit.shop.ContainerShop;
-import cc.bukkit.shop.hologram.DisplayData;
+import cc.bukkit.shop.hologram.DisplayScheme;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -17,7 +17,7 @@ public class ShopDisplayItemDespawnEvent extends ShopEvent implements Cancellabl
   @NotNull
   private final ItemStack itemStack;
   @NotNull
-  private final DisplayData displayData;
+  private final DisplayScheme displayData;
 
   @Setter
   private boolean cancelled;

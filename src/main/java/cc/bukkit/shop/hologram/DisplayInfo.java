@@ -26,7 +26,7 @@ public class DisplayInfo implements Serializable {
   public static DisplayInfo from(
       @NotNull ItemStack itemStack,
       @NotNull ContainerShop shop) {
-    return new DisplayInfo(serializeItemStack(itemStack), shop.getLocation().toString());
+    return new DisplayInfo(serializeItemStack(itemStack), shop.location().toString());
   }
 
   public static String defaultMark() {

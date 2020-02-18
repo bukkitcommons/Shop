@@ -1,6 +1,12 @@
 package cc.bukkit.shop;
 
-import cc.bukkit.shop.action.ShopActionManager;
+import cc.bukkit.shop.manager.LocaleManager;
+import cc.bukkit.shop.manager.PermissionManager;
+import cc.bukkit.shop.manager.ShopActionManager;
+import cc.bukkit.shop.manager.ShopLoader;
+import cc.bukkit.shop.manager.ShopManager;
+import cc.bukkit.shop.manager.ShopMessager;
+import cc.bukkit.shop.misc.StackMatcher;
 
 public abstract class Shop {
   private static ShopPlugin plugin;
@@ -35,7 +41,7 @@ public abstract class Shop {
     return plugin.getActions();
   }
   
-  public static ShopItemMatcher getItemMatcher() {
+  public static StackMatcher getItemMatcher() {
     return plugin.getItemMatcher();
   }
   

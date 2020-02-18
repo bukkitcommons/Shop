@@ -2,7 +2,7 @@ package cc.bukkit.shop.event;
 
 import org.bukkit.event.Cancellable;
 import org.jetbrains.annotations.NotNull;
-import cc.bukkit.shop.ContainerShop;
+import cc.bukkit.shop.BasicShop;
 import lombok.Getter;
 
 public class ShopDeleteEvent extends ShopEvent implements Cancellable {
@@ -12,7 +12,7 @@ public class ShopDeleteEvent extends ShopEvent implements Cancellable {
 
   @Getter
   @NotNull
-  private final ContainerShop shop;
+  private final BasicShop shop;
 
   private boolean cancelled;
 
@@ -22,7 +22,7 @@ public class ShopDeleteEvent extends ShopEvent implements Cancellable {
    * @param sho Target shop
    * @param fromMemory Only delete from the memory? false = delete both in memory and database
    */
-  public ShopDeleteEvent(@NotNull ContainerShop shop, boolean fromMemory) {
+  public ShopDeleteEvent(@NotNull BasicShop shop, boolean fromMemory) {
     this.shop = shop;
     this.fromMemory = fromMemory;
   }
